@@ -22,7 +22,7 @@ public class NightController : MonoBehaviour
             timer += dayCycleSpeed * Time.deltaTime;
         }
         image.color = new Color(0f, 0f, 0f, timer/1000);
-        if (image.color.a >= 0.9)
+        if (image.color.a >= 0.95)
         {
             isDecrease = true;
         }

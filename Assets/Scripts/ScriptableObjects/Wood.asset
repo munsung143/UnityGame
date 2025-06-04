@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: fdff7214cc10c9144a4a543e509b2463, type: 3}
   _description: eee
-  _maxAmount: 6
+  _maxAmount: 10
   tile: {fileID: 0}

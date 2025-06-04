@@ -10,11 +10,13 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody2D rigid;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] float speed;
-
+    [SerializeField] int hp;
     [SerializeField] InventoryManager inventory;
     [SerializeField] Tiles tiles;
     [SerializeField] Items items;
     [SerializeField] GameObject item;
+
+    private bool onGround;
 
     private void Update()
     {
@@ -24,7 +26,10 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Jump();
+            if (onGround)
+            {
+                Jump();
+            }
         }
     }
     private void FixedUpdate()
@@ -44,22 +49,33 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            if (collision.GetContact(i).normal.y >= 0.99f)
+            {
+                onGround = true;
+                return;
+            }
+        }
+        onGround = false;
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        onGround = false ;
+    }
+
     public void Jump()
     {
         rigid.AddForce(Vector2.up * 7, ForceMode2D.Impulse);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Item")
-        {
-            GetItem(collision.gameObject.GetComponent<ItemController>());
-        }
-    }
-
     public void GetItem(ItemController item)
     {
         bool canAddItem = inventory.AddItem(item.Data);
+        //Debug.Log(1);
         if (canAddItem)
         {
             Destroy(item.gameObject);
@@ -77,8 +93,21 @@ public class Player : MonoBehaviour
             Break();
         }
     }
+    public bool CheckRange()
+    {
+        Vector2 p = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        if (p.magnitude < 5)
+        {
+            return true;
+        }
+        return false;
+    }
     public void Break()
     {
+        if (!CheckRange())
+        {
+            return;
+        }
         Vector3 clickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int clickedTilePos = tilemap.WorldToCell(clickedPos);
         TileBase clickedTile = tilemap.GetTile(clickedTilePos);
@@ -86,7 +115,7 @@ public class Player : MonoBehaviour
         if (clickedTile != null)
         {
             i = Instantiate(item);
-            i.transform.position = clickedTilePos;
+            i.transform.position = clickedTilePos + new Vector3(0.5f,0.5f,0);
         }
         if (clickedTile == tiles.stone)
         {
@@ -106,6 +135,10 @@ public class Player : MonoBehaviour
 
     public void Place()
     {
+        if (!CheckRange())
+        {
+            return;
+        }
         Vector3 clickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int clickedTilePos = tilemap.WorldToCell(clickedPos);
         if (tilemap.GetTile(clickedTilePos) != null)

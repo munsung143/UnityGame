@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: 793f6a11227ff984d82955329d887c2b, type: 3}
   _description: It is dirt
-  _maxAmount: 5
+  _maxAmount: 10
   tile: {fileID: 0}
