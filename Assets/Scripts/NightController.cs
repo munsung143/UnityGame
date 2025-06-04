@@ -15,12 +15,21 @@ public class NightController : MonoBehaviour
     {
         if (isDecrease)
         {
-
+            timer -= dayCycleSpeed * Time.deltaTime;
         }
         else
         {
-            timer += Time.deltaTime;
+            timer += dayCycleSpeed * Time.deltaTime;
         }
-            image.color = new Color(0, 0, 0, 4);
+        image.color = new Color(0f, 0f, 0f, timer/1000);
+        if (image.color.a >= 0.9)
+        {
+            isDecrease = true;
+        }
+        if (image.color.a <= 0)
+        {
+            isDecrease = false;
+        }
+
     }
 }
