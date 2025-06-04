@@ -9,6 +9,7 @@ public class StructGenerator : MonoBehaviour
     [SerializeField] int treeCount;
     [SerializeField] MapGenerator mapGenerator;
     [SerializeField] Tiles tiles;
+    
     [SerializeField] TileBase wood => tiles.wood;
     [SerializeField] TileBase leaves => tiles.leaves;
 

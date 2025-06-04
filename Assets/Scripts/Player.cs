@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] Tilemap tilemap;
+    [SerializeField] Tilemap tagmap;
+    [SerializeField] TileBase tag;
     [SerializeField] Rigidbody2D rigid;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] float speed;
@@ -17,9 +18,18 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject item;
 
     private bool onGround;
+    private Vector3Int beforeTagPos;
 
     private void Update()
     {
+        if (CheckRange())
+        {
+            ViewTag();
+        }
+        else
+        {
+            tagmap.SetTile(beforeTagPos, null);
+        }
         if (Input.GetMouseButtonDown(0))
         {
             UseItem();
@@ -31,6 +41,14 @@ public class Player : MonoBehaviour
                 Jump();
             }
         }
+    }
+
+    public void ViewTag()
+    {
+        tagmap.SetTile(beforeTagPos, null);
+        Vector3Int tagPos = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        tagmap.SetTile(tagPos, tag);
+        beforeTagPos = tagPos;
     }
     private void FixedUpdate()
     {

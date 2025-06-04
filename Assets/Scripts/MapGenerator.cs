@@ -9,7 +9,8 @@ using UnityEngine.UIElements;
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField] StructGenerator structGenerator;
-    
+    [SerializeField] Player player;
+
     [SerializeField] int mapWidth;
     public int MapWidth { get { return mapWidth; } }
     [SerializeField] int mapHeight;
@@ -56,6 +57,7 @@ public class MapGenerator : MonoBehaviour
         GenCaveNoise();
         GenCave();
         structGenerator.GenTrees();
+        SetPlayerPos();
     }
 
     public void Init()
@@ -185,6 +187,19 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetPlayerPos()
+    {
+        Vector2 pos = new Vector2(500, 700);
+        int temp = 700;
+        while (Tilemap.GetTile(new Vector3Int(500, temp, 0)) != tiles.grass)
+        {
+            temp--;
+        }
+        pos.y = temp + 3;
+
+        player.transform.position = pos;
     }
     public void GenStone()
     {
