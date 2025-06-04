@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a516d07291a884c938646adfae2748, type: 3}
+  m_Name: Items
+  m_EditorClassIdentifier: 
+  dirt: {fileID: 11400000, guid: 23464a31a1749954aabe90ed3dcbf307, type: 2}
+  stone: {fileID: 11400000, guid: 0efdc2e9ea7221e41988aab47ecc6468, type: 2}
+  wood: {fileID: 11400000, guid: aa16ce33732a3464fad4fd0a9d360eda, type: 2}
+  pickaxe: {fileID: 11400000, guid: 6d50e1fe2d2162345ad00d779ac00b6b, type: 2}
